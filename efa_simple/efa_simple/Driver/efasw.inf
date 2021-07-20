@@ -1,0 +1,100 @@
+[Version]
+Signature="$CHICAGO$"
+Class=USB
+provider=%EFA%
+LayoutFile=layout.inf
+ClassGUID={36fc9e60-c465-11cf-8056-444553540000} 
+DriverVer= 6/30/2003
+
+[Manufacturer]
+%EFA%=EFA
+
+
+[EFA]
+%USB\VID_04B4&PID_6473.DeviceDesc%=INIT4, USB\VID_04B4&PID_6473
+%USB\VID_5094&PID_2060.DeviceDesc%=EFAW, USB\VID_5094&PID_2060
+%USB\VID_0548&PID_1007.DeviceDesc%=EFAW, USB\VID_0548&PID_1007
+
+
+
+[PreCopySection]
+HKR,,NoSetupUI,,1
+
+[DestinationDirs]
+INIT4.Files.Ext = 10,System32\Drivers
+INIT4.Files.Inf = 10,INF
+
+
+
+[INIT4]
+CopyFiles=INIT4.Files.Ext, INIT4.Files.Inf
+AddReg=INIT4.AddReg
+
+
+
+
+[INIT4.NT]
+CopyFiles=INIT4.Files.Ext, INIT4.Files.Inf
+AddReg=INIT4.AddReg
+
+
+
+
+[INIT4.NT.Services]
+Addservice = INIT4, 0x00000002, INIT4.AddService
+
+
+
+[INIT4.AddService]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 2                  ; SERVICE_AUTO_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\efasinit.sys
+LoadOrderGroup = Base
+
+
+
+[INIT4.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,efasinit.sys
+
+
+[INIT4.Files.Ext]
+efasinit.sys
+efasw.sys
+
+[INIT4.Files.Inf]
+efasw.inf
+;---------------------------------------------------------------
+[EFAW]
+AddReg=EFAW.AddReg
+
+[EFAW.NT]
+AddReg=EFAW.AddReg
+
+[EFAW.NT.Services]
+Addservice = EFAW, 0x00000002, EFAW.AddService
+
+[EFAW.AddService]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 2                  ; SERVICE_AUTO_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\efasw.sys
+LoadOrderGroup = Base
+
+[EFAW.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,efasw.sys
+
+;---------------------------------------------------------------
+
+[Strings]
+EFA="EFA LINKER"
+USB\VID_0547&PID_2135&REV_8877.DeviceDesc="EFA Simple Initialization"
+USB\VID_0547&PID_2137&REV_9977.DeviceDesc="EFA simple Initialization"
+USB\VID_0547&PID_2138&REV_9977.DeviceDesc="EFA simple Initialization"
+USB\VID_0547&PID_2138&REV_1177.DeviceDesc="EFA simple Initialization"
+USB\VID_0547&PID_2139&REV_2277.DeviceDesc="EFA simple Initialization"
+USB\VID_04B4&PID_6473.DeviceDesc="EFA simple Initialization"
+USB\VID_5094&PID_2060.DeviceDesc="EFA simple"
+USB\VID_0548&PID_1007.DeviceDesc="EFA simple"
